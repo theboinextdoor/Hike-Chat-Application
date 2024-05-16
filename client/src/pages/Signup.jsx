@@ -2,9 +2,16 @@ import React, { useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import uploadFile from "../helpers/uploadFile"
+import toast from 'react-hot-toast';
+
+
+
+
 const Signup = () => {
 
   // Page Functionality
+  const [uploadPhoto, setUploadPhoto] = useState("")
   const [showpassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setshowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -14,14 +21,15 @@ const Signup = () => {
     confirmpassword: "",
     profile_pic: ""
   })
-  const [uploadPhoto, setUploadPhoto] = useState("")
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
+
   const handleConfirmShowPassword = () => {
     setshowConfirmPassword((prev) => !prev)
   }
+
   const handleOnChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -34,9 +42,23 @@ const Signup = () => {
     })
   }
 
-  const handleUploadPhoto = (e) => {
+  
+  const handleUploadPhoto = async(e) => {
     const file = e.target.files[0];
+
+    const uploadPhotoforCloud = await uploadFile(file)
+    
+    console.log("Upload Photo",uploadPhotoforCloud)
     setUploadPhoto(file)
+
+    setData((prev) =>{
+      return {
+        ...prev,
+        profile_pic: uploadPhotoforCloud?.url
+      }
+    })
+    
+
   }
 
   const handleClearUploadPhoto = (e) => {
@@ -45,21 +67,19 @@ const Signup = () => {
     setUploadPhoto(null)
   }
 
-
   // Handle API
   const handleSignup = (e) => {
     e.preventDefault();
     e.stopPropagation()
+    console.log("All Data: " , data)
   }
-
 
 
 
   return (
     <div className='mt-5'>
-      <div className='bg-white w-full max-w-sm rounded-3xl overflow-hidden p-4 mx-auto '>
+      <div className='bg-white w-full md:max-w-md max-w-sm rounded-3xl mx-auto overflow-hidden p-4  '>
         <h3 className='text-2xl'>Welcome to Hike </h3>
-
 
         <form className='grid gap-4 mt-5' onSubmit={handleSignup}>
 
@@ -74,7 +94,7 @@ const Signup = () => {
               value={data.name}
               onChange={handleOnChange}
               required
-              className='input rounded-lg  input-bordered w-full max-w-xs px-2 py-1 focus:outline-primary'
+              className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
             />
           </div>
 
@@ -89,7 +109,7 @@ const Signup = () => {
               value={data.email}
               onChange={handleOnChange}
               required
-              className='input rounded-lg  input-bordered w-full max-w-xs px-2 py-1 focus:outline-primary'
+              className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
             />
           </div>
 
@@ -105,9 +125,9 @@ const Signup = () => {
                 value={data.password}
                 onChange={handleOnChange}
                 required
-                className='input rounded-lg  input-bordered w-full max-w-xs px-2 py-1 focus:outline-primary '
+                className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary '
               />
-              <div className='absolute top-1.5 right-12 text-lg'>
+              <div className='absolute top-1.5 right-3 text-lg'>
                 {
                   showpassword ? <FaEyeSlash onClick={handleShowPassword} /> : <FaEye onClick={handleShowPassword} />
                 }
@@ -127,9 +147,9 @@ const Signup = () => {
                 value={data.confirmpassword}
                 onChange={handleOnChange}
                 required
-                className='input rounded-lg  input-bordered w-full max-w-xs px-2 py-1 focus:outline-primary'
+                className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
               />
-              <div className='absolute top-1.5 right-12 text-lg'>
+              <div className='absolute top-1.5 right-3 text-lg'>
                 {
                   showConfirmPassword ? <FaEyeSlash onClick={handleConfirmShowPassword} /> : <FaEye onClick={handleConfirmShowPassword} />
                 }
@@ -161,7 +181,7 @@ const Signup = () => {
               type='file'
               id="profile_pic"
               name='profile_pic'
-              value={data.profile_pic}
+              // value={data.profile_pic}
               className='hidden bg-slate-100 px-2 py1 focus:outline-primary '
               onChange={handleUploadPhoto}
 
@@ -180,3 +200,6 @@ const Signup = () => {
 }
 
 export default Signup
+
+
+
