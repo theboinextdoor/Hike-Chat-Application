@@ -96,11 +96,11 @@ const Signup = () => {
       setUploadPhoto(null);
       
       setTimeout(()=>{
-        toast.success(response.data.message)
+        toast.success(response?.data?.message)
         navigate("/login")
       },1000)
       } catch (error) {
-        toast.error(error.response.data.message)
+        toast.error(error?.response?.data.message)
       }
     }else{
       toast.error("Password must greater than 6 digit")
@@ -111,7 +111,8 @@ const Signup = () => {
   return (
     <div className='mt-5'>
       <div className='bg-white w-full md:max-w-md max-w-sm rounded-3xl mx-auto overflow-hidden p-4  '>
-        <h3 className='text-2xl'>Welcome to Hike </h3>
+        <h3 className='text-2xl'>Sign Up</h3>
+
 
         <form className='grid gap-4 mt-5' onSubmit={handleSignup}>
 
