@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import uploadFile from "../helpers/uploadFile"
 import toast from 'react-hot-toast';
@@ -26,7 +26,7 @@ const Signup = () => {
     confirmPassword: "",
     profile_pic: ""
   })
-  
+
   // Page Functionality
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
@@ -54,7 +54,7 @@ const Signup = () => {
 
     const uploadPhotoforCloud = await uploadFile(file)
 
-    console.log("Upload Photo", uploadPhotoforCloud)
+    // console.log("Upload Photo", uploadPhotoforCloud)
     setUploadPhoto(file)
 
     setData((prev) => {
@@ -78,31 +78,36 @@ const Signup = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    if(data.password.length >=5){
+    if (data.password.length >= 5) {
       try {
         const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/signup`;
-      const response = await axios.post(URL, data);
-      console.log("This is the response : ", response)
-  
-      if(response.error){
-        throw new Error;
-      }
-      
-      data.name = "",
-      data.email = "",
-      data.password = "",
-      data.profile_pic = "",
-      data.confirmPassword =""
-      setUploadPhoto(null);
-      
-      setTimeout(()=>{
-        toast.success(response?.data?.message)
-        navigate("/login")
-      },1000)
+        const response = await axios.post(URL, data);
+        console.log("This is the response : ", response)
+
+        if (response.error) {
+          throw new Error;
+        }
+
+        // clear the input field after submission
+        if (response?.data?.success) {
+          setData({
+            name: "",
+            email: "",
+            password: "",
+            profile_pic: "",
+            confirmPassword: ""
+          });
+          setUploadPhoto(null);
+
+          setTimeout(() => {
+            toast.success(response?.data?.message)
+            navigate("/login")
+          }, 1000)
+        }
       } catch (error) {
         toast.error(error?.response?.data.message)
       }
-    }else{
+    } else {
       toast.error("Password must greater than 6 digit")
     }
   }
@@ -111,7 +116,10 @@ const Signup = () => {
   return (
     <div className='mt-5'>
       <div className='bg-white w-full md:max-w-md max-w-sm rounded-3xl mx-auto overflow-hidden p-4  '>
-        <h3 className='text-2xl'>Sign Up</h3>
+        <div className='flex flex-col items-center justify-center gap-3'>
+          <FaUser className='text-3xl' />
+          <h3 className='text-xl md:text-2xl'>Sign Up</h3>
+        </div>
 
 
         <form className='grid gap-4 mt-5' onSubmit={handleSignup}>

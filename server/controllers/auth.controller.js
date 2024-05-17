@@ -37,28 +37,28 @@ export const signup = async (req, res) => {
                email,
           })
 
-     //     if user is successfully created in Database 
-         if(newUser){
-               await generateTokenandCookies(newUser._id , res)
+          //     if user is successfully created in Database 
+          if (newUser) {
+               await generateTokenandCookies(newUser._id, res)
 
                await newUser.save();
                res.status(200).json({
-                    message : "Sign up successfully",
-                    data : {
-                         _id : newUser._id,
-                         name : newUser.name,
-                         profile_pic : newUser.profile_pic,
-                         email : newUser.email
+                    message: "Sign up successfully",
+                    data: {
+                         _id: newUser._id,
+                         name: newUser.name,
+                         profile_pic: newUser.profile_pic,
+                         email: newUser.email
                     },
-                    success : true
+                    success: true
                })
-         }else{
-          return res.status(500).json({
-               message : "Invalid User Data ",
-               error: error.message
-          })
-         }
- 
+          } else {
+               return res.status(500).json({
+                    message: "Invalid User Data ",
+                    error: error.message
+               })
+          }
+
      } catch (error) {
           return res.status(500).json({
                message: "Internal error in signup Controller",
@@ -95,9 +95,7 @@ export const login = async (req, res) => {
 
           }
           const token = await generateTokenandCookies(tokenData, res)
-          console.log("Generated Token", token);
-
-          
+          // console.log("Generated Token", token);
 
           // user details 
           const userData = {
@@ -109,9 +107,12 @@ export const login = async (req, res) => {
 
           return res.status(200).json({
                message: "Login successfully",
-               data: userData,
+               data: {
+                    userData,
+                    token: token
+               },
                success: true,
-               token: token
+
           })
      } catch (error) {
           return res.status(500).json({
@@ -146,8 +147,8 @@ export const logout = (req, res) => {
 export const userDetails = async (req, res) => {
      try {
           const token = req.cookies.token || "";
-          console.log("This is the UserDetails Token : " , req.cookies.token )
-         
+          console.log("This is the UserDetails Token : ", req.cookies.token)
+
 
           const user = await getUserDetailsFromToken(token);
           if (!user) {
@@ -180,7 +181,7 @@ export const updateUserDetails = async (req, res) => {
                user,
                {
                     name: name,
-                    profile_pic : profile_pic
+                    profile_pic: profile_pic
                },
                { new: true }
           );
@@ -194,7 +195,7 @@ export const updateUserDetails = async (req, res) => {
           return res.status(200).json({
                message: "User details updated successfully",
                data: updatedUser,
-               success : true
+               success: true
           });
      } catch (error) {
           return res.status(500).json({

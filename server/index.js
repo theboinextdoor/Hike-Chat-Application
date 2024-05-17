@@ -12,30 +12,33 @@ import connectToMongoDB from "./database/connectToMogoDB.js"
 dotenv.config();
 
 // initializing all the essentilas for the backend server
-const app = express();    
+const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors())
+app.use(cors({
+     origin: 'http://localhost:3000', // Replace with your frontend domain
+     credentials: true,
+}))
 app.use(express.json())
 app.use(cookieParser())
 
 
 
 // routes
-app.get("/" , (req , res) =>{
+app.get("/", (req, res) => {
      res.send("Hey there i am the home page ")
 })
 
 
 // initializing the API endpoints
-app.use("/api/auth" , authRoute)          // API for the authenticatioin user
+app.use("/api/auth", authRoute)          // API for the authenticatioin user
 
 
 
 // connecting to the mongodb and starting the server
-connectToMongoDB().then(() =>{
+connectToMongoDB().then(() => {
      // starting the server
-     app.listen(PORT , ()=>{        
+     app.listen(PORT, () => {
           console.log(`Server is running on port ${PORT}`);
-     })     
+     })
 })
 

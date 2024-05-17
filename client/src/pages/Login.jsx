@@ -1,49 +1,74 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaUser } from "react-icons/fa";
 
 const Login = () => {
-  const [showpassword , setShowPassword] = useState(false)
-  const [data , setData] = useState({
-    email : "",
-    password : ""
+  const navigate = useNavigate();
+  const [showpassword, setShowPassword] = useState(false)
+  const [data, setData] = useState({
+    email: "",
+    password: ""
   })
 
- 
 
-  const handleShowPassword = () =>{
+
+  const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
 
-  const handleOnChange = (e) =>{
+  const handleOnChange = (e) => {
     e.preventDefault();
-    const {name , value} = e.target;
-    setData((prev) =>{
+    const { name, value } = e.target;
+    setData((prev) => {
       return {
         ...prev,
-        [name] : value
+        [name]: value
       }
-      
+
     })
   }
 
-  const handleLogin = async(e) =>{
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(data)
 
-    const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/auth/login`
-    try{
-      const response = await axios.post(URL, data)
-      console.log("This is Login Response : ", response)
-    }catch(error){
-      console.log(error?.response?.data?.message)
+    const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/login`
+    try {
+      const response = await axios({
+        method: "post",
+        url: URL,
+        data: data,
+        withCredentials: true
+      })
+      console.log("This is Login Response: ",response?.data)
+      toast.success(response?.data?.message)
+      localStorage.setItem("user-info" , JSON.stringify(response?.data?.data?.userData))
+
+      const userInfo = JSON.parse(localStorage.getItem('user-info'));
+      console.log(userInfo)
+
+      // clear the input field after submission
+      setData({
+        email: "",
+        password: "",
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000)
+    } catch (error) {
+      toast.error(error?.response?.data?.message)
     }
   }
   return (
     <div className='mt-20'>
       <div className='bg-white w-full md:max-w-md max-w-sm rounded-3xl mx-auto overflow-hidden p-4  '>
-        <h3 className='text-2xl'>Log In</h3>
+        <div className='flex flex-col items-center justify-center gap-3'>
+          <FaUser className='text-3xl' />
+          <h3 className='text-xl md:text-2xl'>Log In</h3>
+        </div>
 
 
         <form className='grid gap-4 mt-5' onSubmit={handleLogin}>
@@ -83,11 +108,17 @@ const Login = () => {
                 }
               </div>
             </div>
+            <div className='mt-1 '>
+              <h3 className='text-sm text-blue-400 cursor-pointer hover:text-blue-500'>
+                <Link to="/forgot-password">Forgot Password ?</Link>
+              </h3>
+            </div>
           </div>
-
          
 
-         
+
+
+
           <button className="btn btn-primary bg-primary rounded-lg py-2 hover:bg-secondary active:bg-tertiary text-white leading-relaxed tracking-wide">Signup</button>
         </form>
         <p className='my-3 text-center'>Didn&apos;t have an Account ?
