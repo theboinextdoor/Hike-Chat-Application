@@ -37,13 +37,28 @@ export const signup = async (req, res) => {
                email,
           })
 
-          const userSave = await newUser.save();
+     //     if user is successfully created in Database 
+         if(newUser){
+               await generateTokenandCookies(newUser._id , res)
 
-          return res.status(200).json({
-               message: "User created successfully",
-               data: userSave,
-               success: true
+               await newUser.save();
+               res.status(200).json({
+                    message : "Sign up successfully",
+                    data : {
+                         _id : newUser._id,
+                         name : newUser.name,
+                         profile_pic : newUser.profile_pic,
+                         email : newUser.email
+                    },
+                    success : true
+               })
+         }else{
+          return res.status(500).json({
+               message : "Invalid User Data ",
+               error: error.message
           })
+         }
+ 
      } catch (error) {
           return res.status(500).json({
                message: "Internal error in signup Controller",

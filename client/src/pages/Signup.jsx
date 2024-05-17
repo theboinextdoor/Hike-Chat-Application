@@ -1,33 +1,39 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import uploadFile from "../helpers/uploadFile"
 import toast from 'react-hot-toast';
+import axios from 'axios';
+
+
 
 
 
 
 const Signup = () => {
 
-  // Page Functionality
+  // Required Hooks
+  const navigate = useNavigate();
   const [uploadPhoto, setUploadPhoto] = useState("")
   const [showpassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setshowConfirmPassword] = useState(false);
+  const [showconfirmPassword, setshowconfirmPassword] = useState(false);
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmpassword: "",
+    confirmPassword: "",
     profile_pic: ""
   })
-
+  
+  // Page Functionality
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
 
   const handleConfirmShowPassword = () => {
-    setshowConfirmPassword((prev) => !prev)
+    setshowconfirmPassword((prev) => !prev)
   }
 
   const handleOnChange = (e) => {
@@ -42,22 +48,22 @@ const Signup = () => {
     })
   }
 
-  
-  const handleUploadPhoto = async(e) => {
+
+  const handleUploadPhoto = async (e) => {
     const file = e.target.files[0];
 
     const uploadPhotoforCloud = await uploadFile(file)
-    
-    console.log("Upload Photo",uploadPhotoforCloud)
+
+    console.log("Upload Photo", uploadPhotoforCloud)
     setUploadPhoto(file)
 
-    setData((prev) =>{
+    setData((prev) => {
       return {
         ...prev,
         profile_pic: uploadPhotoforCloud?.url
       }
     })
-    
+
 
   }
 
@@ -68,12 +74,38 @@ const Signup = () => {
   }
 
   // Handle API
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    e.stopPropagation()
-    console.log("All Data: " , data)
-  }
+    e.stopPropagation();
 
+    if(data.password.length >=5){
+      try {
+        const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/signup`;
+      const response = await axios.post(URL, data);
+      console.log("This is the response : ", response)
+  
+      if(response.error){
+        throw new Error;
+      }
+      
+      data.name = "",
+      data.email = "",
+      data.password = "",
+      data.profile_pic = "",
+      data.confirmPassword =""
+      setUploadPhoto(null);
+      
+      setTimeout(()=>{
+        toast.success(response.data.message)
+        navigate("/login")
+      },1000)
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }else{
+      toast.error("Password must greater than 6 digit")
+    }
+  }
 
 
   return (
@@ -140,18 +172,18 @@ const Signup = () => {
             <label htmlFor='password'>Confirm Password: </label>
             <div className='relative '>
               <input
-                type={showConfirmPassword ? 'text' : 'password'}
-                id="confirmpassword"
-                name='confirmpassword'
+                type={showconfirmPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                name='confirmPassword'
                 placeholder='Confirm Password'
-                value={data.confirmpassword}
+                value={data.confirmPassword}
                 onChange={handleOnChange}
                 required
                 className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
               />
               <div className='absolute top-1.5 right-3 text-lg'>
                 {
-                  showConfirmPassword ? <FaEyeSlash onClick={handleConfirmShowPassword} /> : <FaEye onClick={handleConfirmShowPassword} />
+                  showconfirmPassword ? <FaEyeSlash onClick={handleConfirmShowPassword} /> : <FaEye onClick={handleConfirmShowPassword} />
                 }
               </div>
             </div>
@@ -174,8 +206,6 @@ const Signup = () => {
 
                 </p>
               </div>
-
-
             </label>
             <input
               type='file'
