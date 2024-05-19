@@ -10,7 +10,7 @@ import UserModel from "../models/auth.model.js"
 
 const getUserDetailsFromToken = async(token) =>{
      if(!token){
-          console.log("Token not provided");
+          // console.log("Token not provided");
           return {
                message : "Sessoin time out",
                logout : true
@@ -18,10 +18,10 @@ const getUserDetailsFromToken = async(token) =>{
      }
 
      const decodedToken =  jwt.verify(token , process.env.JWT_SECRET_KEY)
-     console.log("Decoded Token:", decodedToken);
+     // console.log("Decoded Token:", decodedToken);
 
      const user = await UserModel.findById(decodedToken.tokenData.id).select("-password")
-     console.log("User Details:", user);
+     // console.log("User Details:", user);
 
      return user;
 }

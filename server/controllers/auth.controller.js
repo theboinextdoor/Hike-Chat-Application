@@ -147,7 +147,7 @@ export const logout = (req, res) => {
 export const userDetails = async (req, res) => {
      try {
           const token = req.cookies.token || "";
-          console.log("This is the UserDetails Token : ", req.cookies.token)
+          // console.log("This is the UserDetails Token : ", req.cookies.token)
 
 
           const user = await getUserDetailsFromToken(token);
@@ -171,11 +171,11 @@ export const userDetails = async (req, res) => {
 
 export const updateUserDetails = async (req, res) => {
      try {
-          const { name, profile_pic } = req.body;
-
           const token = req.cookies.token || "";
+          
           const user = await getUserDetailsFromToken(token)
-
+          
+          const { name, profile_pic } = req.body;
           // Find the user by ID and update the name and profile picture
           const updatedUser = await UserModel.findByIdAndUpdate(
                user,
@@ -199,7 +199,7 @@ export const updateUserDetails = async (req, res) => {
           });
      } catch (error) {
           return res.status(500).json({
-               message: " Internla error in Update User Details",
+               message: " Internal error in Update User Details",
                error: error.message,
           })
      }

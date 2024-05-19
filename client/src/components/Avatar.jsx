@@ -14,15 +14,15 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
      }
 
      const bgColor = [
-          'bg-slate-200',
-          'bg-red-200',
-          'bg-teal-200',
-          'bg-green-200',
-          'bg-sky-200',
-          'bg-yellow-200',
-          'bg-cyan-200',
-          'bg-gray-200',
-          'bg-blue-200'
+          'bg-slate-300',
+          'bg-red-300',
+          'bg-teal-300',
+          'bg-green-300',
+          'bg-sky-300',
+          'bg-yellow-300',
+          'bg-cyan-300',
+          'bg-gray-300',
+          'bg-blue-300'
      ]
 
      const randomNumber = Math.floor(Math.random() * 9)
@@ -41,12 +41,12 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
                     ) : (
                          name ? (
                               <div 
-                                   className={`overflow-hidden rounded-full flex items-center justify-center ${bgColor[randomNumber]}`} 
+                                   className={`overflow-hidden rounded-full flex items-center justify-center text-black ${bgColor[randomNumber]}`} 
                                    style={{ width: width + "px", height: height + "px" }}>
                                    {avatarName}
                               </div>
                          ) : (
-                              <FaUser size={width} />
+                              <FaUser size={width} className='text-black' />
                          )
                     )
                }

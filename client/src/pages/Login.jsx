@@ -4,9 +4,12 @@ import toast from 'react-hot-toast'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaUser } from "react-icons/fa";
+import { useDispatch } from "react-redux"
+import { setToken, setUser } from '../redux/userSlice'
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [showpassword, setShowPassword] = useState(false)
   const [data, setData] = useState({
     email: "",
@@ -42,22 +45,27 @@ const Login = () => {
         data: data,
         withCredentials: true
       })
-      console.log("This is Login Response: ",response?.data)
+      console.log("This is Login Response: ", response?.data)
       toast.success(response?.data?.message)
-      localStorage.setItem("user-info" , JSON.stringify(response?.data?.data?.userData))
 
-      const userInfo = JSON.parse(localStorage.getItem('user-info'));
-      console.log(userInfo)
+      if (response?.data?.success) {
+        dispatch(setToken(response?.data?.data?.token))
+        localStorage.setItem("token", response?.data?.data?.token)
 
-      // clear the input field after submission
-      setData({
-        email: "",
-        password: "",
-      });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 1000)
+        // clear the input field after submission
+        setData({
+          email: "",
+          password: "",
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000)
+
+      }
+
+
     } catch (error) {
       toast.error(error?.response?.data?.message)
     }
@@ -114,12 +122,8 @@ const Login = () => {
               </h3>
             </div>
           </div>
-         
 
-
-
-
-          <button className="btn btn-primary bg-primary rounded-lg py-2 hover:bg-secondary active:bg-tertiary text-white leading-relaxed tracking-wide">Signup</button>
+          <button className="btn btn-primary bg-primary rounded-lg py-2 hover:bg-secondary active:bg-tertiary text-white leading-relaxed tracking-wide">Log In</button>
         </form>
         <p className='my-3 text-center'>Didn&apos;t have an Account ?
           <Link to='/signup' className='text-primary hover:text-secondary cursor-pointer'>Sign Up</Link>

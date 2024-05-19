@@ -135,7 +135,7 @@ const Signup = () => {
               value={data.name}
               onChange={handleOnChange}
               required
-              className='input rounded-lg  input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
+              className='input rounded-lg input-bordered w-full max-w-md px-2 py-1 focus:outline-primary'
             />
           </div>
 
