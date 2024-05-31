@@ -59,9 +59,7 @@ const Login = () => {
           password: "",
         });
 
-        setTimeout(() => {
-          navigate("/");
-        }, 1000)
+        navigate("/");
 
       }
 

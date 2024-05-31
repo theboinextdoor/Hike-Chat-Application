@@ -99,10 +99,8 @@ const Signup = () => {
           });
           setUploadPhoto(null);
 
-          setTimeout(() => {
-            toast.success(response?.data?.message)
+          toast.success(response?.data?.message)
             navigate("/login")
-          }, 1000)
         }
       } catch (error) {
         toast.error(error?.response?.data.message)

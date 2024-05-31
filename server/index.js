@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import authRoute from "./routes/auth.route.js"
+import userRoute from "./routes/userSearch.route.js"
 
 // MONGODB CONNECTION FILE
 import connectToMongoDB from "./database/connectToMogoDB.js"
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 
 // initializing the API endpoints
 app.use("/api/auth", authRoute)          // API for the authenticatioin user
+app.use("/api/user", userRoute)          // API for the Searching user
 
 
 
