@@ -12,7 +12,7 @@ import SearchUser from './SearchUser';
 const Sidebar = () => {
      const user = useSelector(state => state?.user);
      const [allUser, setAllUser] = useState([])
-     const [openSearchUser, setOpenSearchUser] = useState(false)
+     const [openSearchUser, setOpenSearchUser] = useState(true)
      return (
           <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
                <div className='bg-primary h-full w-12 rounded-tr-lg rounded-br-lg py-5 flex flex-col justify-between text-white'>
@@ -29,6 +29,7 @@ const Sidebar = () => {
                          <div title="search user" className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-sky-600 rounded-lg'>
                               <FaUserPlus
                                    size={25}
+                                   onClick={() => setOpenSearchUser(true)}
                               />
                          </div>
                     </div>
