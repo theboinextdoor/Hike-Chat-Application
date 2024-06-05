@@ -12,7 +12,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.6.8",
+    "build": "^0.1.4",
     "cloudinary-react": "^1.8.1",
+    "Hike-Messaging-Application": "file:..",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

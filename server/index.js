@@ -39,17 +39,17 @@ app.use("/api/user", userRoute)          // API for the Searching user
 
 // Deploying starts here
 
-const __dirname1 = path.resolve();
+const __dirname = path.resolve();
 const environment = process.env.NODE_ENV;
 console.log("Environment Production : ",environment)
 if (environment === "production") {
      // Serve static files from the React app
     
-     app.use(express.static(path.join(__dirname1, "client" , "dist")));
+     app.use(express.static(path.join(__dirname, "/client/dist")));
      
      // Handle React routing, return all requests to React app
      app.get('*', (req, res) => {
-          res.sendFile(path.join(__dirname1, "client", "dist", "index.html"));
+          res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
      });
 } else {
      app.get("/", (req, res) => {
