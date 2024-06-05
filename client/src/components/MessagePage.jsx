@@ -178,10 +178,10 @@ const MessagePage = () => {
           <Link to="/" className='lg:hidden'>
             <IoChevronBack size={20} />
           </Link>
-          <div >
+          <div  >
             <Avatar
-              height={50}
-              width={50}
+              height={30}
+              width={30}
               imageUrl={dataUser?.profile_pic}
               name={dataUser?.name}
               userId={dataUser?._id}

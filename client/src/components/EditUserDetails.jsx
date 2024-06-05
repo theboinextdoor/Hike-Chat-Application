@@ -12,7 +12,6 @@ const EditUserDetails = ({ onClose, user }) => {
           profile_pic: user?.profile_pic
      })
      const dispatch = useDispatch();
-
      const uploadPhoto = useRef();
 
      useEffect(() => {
@@ -120,9 +119,9 @@ const EditUserDetails = ({ onClose, user }) => {
                          <Divider />
 
                          <div className='flex gap-2 w-fit ml-auto mt-3'>
-                              <button className='border-primary text-primary cursor-pointer border px-4 py-1 rounded-md hover:bg-primary hover:text-white' onClick={onClose}>Cancel</button>
+                              <button type="button" className='border-primary text-primary cursor-pointer border px-4 py-1 rounded-md hover:bg-primary hover:text-white' onClick={onClose}>Cancel</button>
 
-                              <button className='border-primary bg-primary cursor-pointer text-white border px-4 py-1 rounded-md hover:bg-secondary hover:text-white' onClick={handleSubmit}>Save</button>
+                              <button type="submit" className='border-primary bg-primary cursor-pointer text-white border px-4 py-1 rounded-md hover:bg-secondary hover:text-white' onClick={handleSubmit}>Save</button>
                          </div>
                     </form>
                </div >

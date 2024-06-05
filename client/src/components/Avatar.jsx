@@ -34,7 +34,9 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
      const isOnline= onlineUser.includes(userId)
 
      return (
-          <div className={` rounded-full shadow border text-xl font-semibold relative ${bgColor[randomNumber]}`} style={{ width: width + "px", height: height + "px" }}>
+          <div className={` rounded-full shadow border text-xl font-semibold relative ${bgColor[randomNumber]}`} style={{ width: width + "px", height: height + "px" ,  borderRadius: '50%',   overflow: 'hidden',  display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center' }}>
                {
                     imageUrl ? (
                          <img
@@ -65,4 +67,4 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
      )
 }
 
-export default Avatar;
+export default React.memo(Avatar);

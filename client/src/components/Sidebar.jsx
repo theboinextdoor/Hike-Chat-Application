@@ -17,6 +17,7 @@ const Sidebar = () => {
      const dispatch = useDispatch();
      const user = useSelector(state => state?.user);
      const [allUser, setAllUser] = useState([])
+     // const [editUserOpen , setEditUserOpen] = useState(false)
      const [openSearchUser, setOpenSearchUser] = useState(false)
      const socketConnection = useSelector(state => state?.user?.socketConnection)
 
@@ -177,13 +178,13 @@ const Sidebar = () => {
                </div>
 
                {/* edit user details */}
-               {/* {
-                    editUserOpen  && (
-                         <EditUserDetails 
-                         onClose={() => setEditUserOpen(false)} 
-                         user={user}/>
-                    )
-               } */}
+               {
+                    // editUserOpen  && (
+                    //      <EditUserDetails 
+                    //      onClose={() => setEditUserOpen(false)} 
+                    //      user={user}/>
+                    // )
+               }
 
                {/* Search User */}
                {
@@ -191,8 +192,6 @@ const Sidebar = () => {
                          <SearchUser onClose={() => setOpenSearchUser(false)} />
                     )
                }
-
-
           </div>
      )
 }

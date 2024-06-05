@@ -1,12 +1,13 @@
 {
-  "name": "server",
+  "name": "Hike-Messaging-Application",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon server/index.js",
+    "start": "node server/index.js",
+    "build" : "npm install && npm install --prefix client && npm install build --prefix client"
   },
   "keywords": [],
   "type": "module",
