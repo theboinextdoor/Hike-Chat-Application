@@ -1,5 +1,5 @@
 import React from 'react'
-import {createBrowserRouter} from "react-router-dom" 
+import {createBrowserRouter, Navigate} from "react-router-dom" 
 import Home from '../pages/Home'
 import App from '../App'
 import Signup from '../pages/Signup'
@@ -7,6 +7,24 @@ import Login from '../pages/Login'
 import MessagePage from '../components/MessagePage'
 import AuthLayout from '../layout/AuthLayout'
 import ForgotPassword from '../pages/ForgotPassword'
+import toast from 'react-hot-toast'
+
+
+const ProtectedRoute = ({ children }) => {
+     const isLoggedIn = localStorage.getItem('token');
+     if (!isLoggedIn) {
+       return <Navigate to="/login" replace />;
+     }
+     return children;
+   };
+
+   const PublicRoute = ({ children }) => {
+     const isLoggedIn = localStorage.getItem('token');
+     if (isLoggedIn) {
+       return <Navigate to="/" replace />;
+     }
+     return children;
+   };
 
 const router = createBrowserRouter([
      {
@@ -15,7 +33,11 @@ const router = createBrowserRouter([
           children : [
                {
                     path : "/",
-                    element : <Home />,
+                    element :(
+                         <ProtectedRoute>
+                           <Home />
+                         </ProtectedRoute>
+                       ),
                     children : [
                          {
                               path: "/:userId",
@@ -29,7 +51,11 @@ const router = createBrowserRouter([
                },
                {
                     path: "/login",
-                    element : <AuthLayout><Login /></AuthLayout>
+                    element : (
+                         <PublicRoute>
+                           <AuthLayout><Login /></AuthLayout>
+                         </PublicRoute>
+                       )
                },
                {
                     path: "/forgot-password",

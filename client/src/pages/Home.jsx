@@ -48,8 +48,6 @@ const Home = () => {
     });
 
     socketConnection.on("onlineUser", (data)=>{
-        console.log("User is Online ")
-        console.log(data)
         dispatch(setOnlineUser(data))
     })
 
