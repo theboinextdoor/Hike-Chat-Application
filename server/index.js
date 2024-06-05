@@ -5,6 +5,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import authRoute from "./routes/auth.route.js"
 import userRoute from "./routes/userSearch.route.js"
+import {app , server} from "./socket/user.socket.js"
 
 // MONGODB CONNECTION FILE
 import connectToMongoDB from "./database/connectToMogoDB.js"
@@ -13,7 +14,7 @@ import connectToMongoDB from "./database/connectToMogoDB.js"
 dotenv.config();
 
 // initializing all the essentilas for the backend server
-const app = express();
+// const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
      origin: 'http://localhost:3000', // Replace with your frontend domain
@@ -39,7 +40,7 @@ app.use("/api/user", userRoute)          // API for the Searching user
 // connecting to the mongodb and starting the server
 connectToMongoDB().then(() => {
      // starting the server
-     app.listen(PORT, () => {
+     server.listen(PORT, () => {
           console.log(`Server is running on port ${PORT}`);
      })
 })

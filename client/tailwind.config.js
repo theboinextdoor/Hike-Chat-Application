@@ -10,6 +10,9 @@ export default {
         primary : "#00acff",
         secondary : "#0690d4",
         tertiary : "#63c6f7"
+      },
+      backgroundImage : {
+        'hero': "url('./src/assets/chatbg2.jpg')",
       }
     },
   },

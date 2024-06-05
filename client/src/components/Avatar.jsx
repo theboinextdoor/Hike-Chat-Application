@@ -1,7 +1,11 @@
 import React from 'react'
 import { FaUser } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const Avatar = ({ userId, name, imageUrl, width, height }) => {
+     
+     const onlineUser = useSelector(state => state?.user?.onlineUser)
+
 
      let avatarName = "";
      if (name) {
@@ -27,8 +31,10 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
 
      const randomNumber = Math.floor(Math.random() * 9)
 
+     const isOnline= onlineUser.includes(userId)
+
      return (
-          <div className={`overflow-hidden rounded-full shadow border text-xl font-semibold ${bgColor[randomNumber]}`} style={{ width: width + "px", height: height + "px" }}>
+          <div className={` rounded-full shadow border text-xl font-semibold relative ${bgColor[randomNumber]}`} style={{ width: width + "px", height: height + "px" }}>
                {
                     imageUrl ? (
                          <img
@@ -48,6 +54,11 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
                          ) : (
                               <FaUser size={width} className='text-black' />
                          )
+                    )
+               }
+               {
+                    isOnline && (
+                         <div className='bg-green-400 p-1 absolute bottom-0 -right-1 z-10 rounded-full'></div>
                     )
                }
           </div>

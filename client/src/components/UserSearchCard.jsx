@@ -7,9 +7,11 @@ const UserSearchCard = ({user , onClose}) => {
     <Link to={"/"+user?._id} onClick={onClose} className='flex items-center gap-3 p-2 border border-transparent border-b-slate-300 lg:p-4 cursor-pointer hover:border hover:bg-sky-100 rounded-xl'>
       <div>
         <Avatar 
-            width={50}
-            height={50}
+            width={25}
+            height={25}
             name={user.name}
+            userId={user?._id}
+            imageUrl={user?.profile_pic}
           />
       </div>
       <div>
