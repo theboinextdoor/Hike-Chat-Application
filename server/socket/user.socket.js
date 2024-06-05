@@ -173,7 +173,7 @@ io.on("connection", async (socket) => {
      // disconnect
      // It sets up a listener for the disconnect event. When a client disconnects.
      socket.on("disconnect", async () => {
-          onlineUser.delete(user?._id)
+          onlineUser.delete(user?._id?.toString())
      })
 })
 
