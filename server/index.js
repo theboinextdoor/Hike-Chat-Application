@@ -38,17 +38,12 @@ app.use("/api/auth", authRoute)          // API for the authenticatioin user
 app.use("/api/user", userRoute)          // API for the Searching user
 
 
-if (environment === 'production') {
+
      app.use(express.static(path.join(__dirname, "/client/dist")))
      app.get("*", (req, res) => {
           app.use(express.static(path.join(__dirname, "client", "dist", "index.html")))
      })
 
-} else {
-     app.get("/", (req, res) => {
-          res.send("Hey this webiste is not on Production Server......")
-     })
-}
 
 
 // connecting to the mongodb and starting the server
