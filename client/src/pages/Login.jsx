@@ -38,7 +38,6 @@ const Login = () => {
     e.preventDefault();
 
     const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/login`
-    console.log('Login URL:', URL); // Verify the URL
     try {
       const response = await axios({
         method: "post",
