@@ -14,13 +14,10 @@ const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 dotenv.config();
 
-const FRONTEND_URL = process.env.FRONTEND_URL
-const environment = process.env.NODE_ENV
-
 
 // CORS options
 const corsOptions = {
-     origin: FRONTEND_URL, // Specify the exact origin
+     origin:'https://hike-chat-application-edi9.onrender.com', // Specify the exact origin
      credentials: true // Allow credentials (cookies, authorization headers, etc.)
  };
  
