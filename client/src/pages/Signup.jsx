@@ -54,7 +54,6 @@ const Signup = () => {
 
     const uploadPhotoforCloud = await uploadFile(file)
 
-    // console.log("Upload Photo", uploadPhotoforCloud)
     setUploadPhoto(file)
 
     setData((prev) => {
@@ -82,7 +81,6 @@ const Signup = () => {
       try {
         const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/signup`;
         const response = await axios.post(URL, data);
-        console.log("This is the response : ", response)
 
         if (response.error) {
           throw new Error;

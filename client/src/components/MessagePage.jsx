@@ -67,11 +67,12 @@ const MessagePage = () => {
           }
         });
       } else {
-        console.error('Error uploading image:', uploadPhoto);
+        toast.error("Internal Error Occured")
+        // console.error('Error uploading image:', uploadPhoto);
       }
     } catch (error) {
       toast.error("Internal Error occured")
-      console.error('Error uploading image:', error);
+      // console.error('Error uploading image:', error);
       setLoading(false);
     }
   }
@@ -119,12 +120,10 @@ const MessagePage = () => {
       socketConnection.emit('seen' , params.userId)
 
       socketConnection.on("message-user", (data) => {
-        console.log("user details :", data)
         setDataUser(data)
       })
 
       socketConnection.on('message', (data) => {
-        console.log("All the Messages : ", data)
         setAllMessage(data)
       })
 

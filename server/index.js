@@ -14,10 +14,22 @@ const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 dotenv.config();
 
-app.use(cors({
-     origin: 'http://localhost:3000', // Replace with your frontend domain
+
+const allowedOrigins = [
+     'http://localhost:3000', // Add this line to allow localhost during development
+     'https://hike-chat-application-edi9.onrender.com' // Add your production domain here
+   ];
+
+   app.use(cors({
+     origin: (origin, callback) => {
+       if (!origin || allowedOrigins.includes(origin)) {
+         callback(null, true);
+       } else {
+         callback(new Error('Not allowed by CORS'));
+       }
+     },
      credentials: true,
-}))
+   }));
 app.use(express.json())
 app.use(cookieParser())
 
@@ -42,6 +54,13 @@ connectToMongoDB().then(() => {
      // starting the server
      server.listen(PORT, () => {
           console.log(`Server is running on port ${PORT}`);
-     })
+     }).on('error', (err) => {
+          if (err.code === 'EADDRINUSE') {
+               console.error(`Port ${PORT} is already in use. Please use a different port.`);
+               process.exit(1);
+          } else {
+               throw err;
+          }
+     });
 })
 

@@ -19,13 +19,21 @@ dotenv.config();
 const server = createServer(app);
 
 
+console.log("Live server : ",process.env.FRONTEND_URL)
+
+
+
 // creates an instance of the socket.io module and assigns it to the io variable
 const io = new Server(server, {
      cors: {
-          origin: process.env.FRONTEND_URL,
-          credentials: true
+       origin: [
+         'http://localhost:3000', // Allow localhost during development
+         'https://hike-chat-application-edi9.onrender.com', // Production URL
+       ],
+       credentials: true,
      }
-})
+   });
+
 
 
 // It sets up a socket connection using the io instance and listens for the connection event.

@@ -45,7 +45,6 @@ const Login = () => {
         data: data,
         withCredentials: true
       })
-      console.log("This is Login Response: ", response?.data)
       toast.success(response?.data?.message)
 
       if (response?.data?.success) {
@@ -62,10 +61,8 @@ const Login = () => {
         navigate("/");
 
       }
-
-
     } catch (error) {
-      toast.error(error?.response?.data?.message)
+      toast.error("Internal Error")
     }
   }
   return (
