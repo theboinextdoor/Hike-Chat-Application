@@ -70,9 +70,6 @@ io.on("connection", async (socket) => {
           socket.emit('message', getConversationMessage?.messages || [])
      })
 
-
-
-
      // new-message
      socket.on("new-message", async (data) => {
           // check conversation is availiable between both the user or not 
