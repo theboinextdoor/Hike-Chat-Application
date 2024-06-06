@@ -1,9 +1,6 @@
 {
   "name": "Hike-Messaging-Application",
   "version": "1.0.0",
-  "engines": {
-    "node": "20.x"
-  },
   "description": "This is a real-time communicationweb application powered by Socket.io ensures that messages are delivered instantly, making conversations smooth and interactive.",
   "main": "index.js",
   "scripts": {
