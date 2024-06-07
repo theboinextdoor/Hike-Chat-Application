@@ -15,17 +15,13 @@ const __dirname = path.resolve();
 dotenv.config();
 
 
-// CORS options
-const corsOptions = {
-     origin:'https://hike-chat-application-edi9.onrender.com', // Specify the exact origin
-     credentials: true // Allow credentials (cookies, authorization headers, etc.)
- };
- 
- // Middleware
- app.use(cors(corsOptions));
- app.options('*', cors(corsOptions)); // Preflight request handling for all routes
- app.use(express.json());
- app.use(cookieParser());
+// Middleware
+app.use(cors({
+     origin : "http://localhost:3000",
+     credentials: true
+}));
+app.use(express.json());
+app.use(cookieParser());
 
 
 
@@ -36,10 +32,10 @@ app.use("/api/user", userRoute)          // API for the Searching user
 
 
 
-     app.use(express.static(path.join(__dirname, "/client/dist")))
-     app.get("*", (req, res) => {
-          app.use(express.static(path.join(__dirname, "client", "dist", "index.html")))
-     })
+app.use(express.static(path.join(__dirname, "/client/dist")))
+app.get("*", (req, res) => {
+     app.use(express.static(path.join(__dirname, "client", "dist", "index.html")))
+})
 
 
 

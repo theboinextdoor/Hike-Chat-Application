@@ -38,6 +38,7 @@ const Login = () => {
     e.preventDefault();
 
     const URL = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/auth/login`
+    console.log("This is the URL", URL)
     try {
       const response = await axios({
         method: "post",
