@@ -15,11 +15,20 @@ const __dirname = path.resolve();
 dotenv.config();
 
 
-// Middleware
+// CORS options
+const allowedOrigins = ['https://your-production-url.vercel.app', 'http://localhost:3000'];
 app.use(cors({
-     origin : "http://localhost:3000",
-     credentials: true
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
