@@ -16,16 +16,10 @@ dotenv.config();
 
 
 // CORS options
-const allowedOrigins = ['https://your-production-url.vercel.app', 'http://localhost:3000'];
+
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+     origin : 'https://hike-chat-application-edi9.onrender.com' || 'http://localhost:3000',
+     credentials : true
 }));
 
 // Middleware
